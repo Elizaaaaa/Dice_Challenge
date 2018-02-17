@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Dice.h" />
+    <ClInclude Include="DiceInvaders.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dice.cpp" />
