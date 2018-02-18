@@ -12,6 +12,13 @@ struct ISprite
 	virtual void draw(int x, int y) = 0;
 };
 
+struct LinkedList {
+	ISprite* sprite;
+	float x, y, id;
+	LinkedList* next;
+	LinkedList* prev;
+};
+
 struct IDiceInvaders 
 {
 	// Destroys the dice invaders instance
