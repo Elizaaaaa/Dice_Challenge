@@ -14,7 +14,7 @@ struct ISprite
 
 struct LinkedList {
 	ISprite* sprite;
-	float x, y;
+	float x, y, id;
 	LinkedList* next;
 	LinkedList* prev;
 };
