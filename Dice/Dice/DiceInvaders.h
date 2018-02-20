@@ -12,11 +12,9 @@ struct ISprite
 	virtual void draw(int x, int y) = 0;
 };
 
-struct LinkedList {
+struct Weapon {
 	ISprite* sprite;
-	float x, y, id;
-	LinkedList* next;
-	LinkedList* prev;
+	float x, y;
 };
 
 struct IDiceInvaders 

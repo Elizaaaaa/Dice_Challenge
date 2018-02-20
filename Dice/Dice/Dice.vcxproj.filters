@@ -23,7 +23,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Dice.cpp">
+    <ClCompile Include="Invaders_STL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
