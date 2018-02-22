@@ -38,28 +38,18 @@ public:
 		// Player start positon
 		horizontalPosition = 320;
 
+		calculateMoves();
 		initAliens();
 	}
 
 	void draw() {
-		newTime = system->getElapsedTime();
-
-		if (playerHealth <= 0 || gameOver) {
-			gameOver = true;
-			drawText();
-		}
-		else {
-			calculateMoves();
-			keyFuncs();
 
 			drawAliens();
 			drawRockets();
 			drawBombs();
 			drawPlayer();
 			drawText();
-		}
 
-		lastTime = newTime;
 	}
 
 	void initAliens() {
@@ -204,7 +194,7 @@ public:
 
 	void drawAliens() {
 		for (int i = row_num - 1; i >= 0; --i) {
-			moveAlienRow(i);	
+			moveAlienRow(i);
 			for (int j = 0; j < col_num; ++j) {
 				int index = j + i * col_num;
 				if (aliens[index] != NULL) {
@@ -239,7 +229,7 @@ public:
 						initBomb(xPos, yPos);
 						lastDropBomb = newTime;
 					}
-					
+
 					checkAlienRockets(xPos, yPos, index);
 					checkAlienPlayer(xPos, yPos, index);
 				}
@@ -254,11 +244,13 @@ public:
 			// Out of the window
 			if ((*r)->y + 32 <= 0) {
 				(*r)->sprite = NULL;
+				(*r) = NULL;
 				rockets.erase(r++);
 				rocketNum--;
 			}
 			else {
-				(*r)->sprite->draw((*r)->x, (*r)->y);
+				if (*r && (*r)->sprite)
+					(*r)->sprite->draw((*r)->x, (*r)->y);
 				++r;
 			}
 		}
@@ -271,19 +263,21 @@ public:
 			// Out of the window
 			if ((*b)->y >= WINDOW_HEIGHT) {
 				(*b)->sprite = NULL;
+				*b = NULL;
 				bombs.erase(b++);
 			}
 			// Bomb hits player
 			else if (hitByBomb(horizontalPosition, WINDOW_HEIGHT - 32, (*b)->x, (*b)->y)) {
-				(*b)->sprite->destroy();
 				(*b)->sprite = NULL;
+				*b = NULL;
 				bombs.erase(b++);
 				playerHealth--;
 				if (playerHealth <= 0)
 					gameOver = true;
 			}
 			else {
-				(*b)->sprite->draw((*b)->x, (*b)->y);
+				if (*b && (*b)->sprite)
+					(*b)->sprite->draw((*b)->x, (*b)->y);
 				++b;
 			}
 		}
@@ -304,26 +298,6 @@ public:
 			system->drawText(32, WINDOW_HEIGHT - 32, lifeInfo.c_str());
 			string scoreInfo = "Score: " + to_string(score);
 			system->drawText(WINDOW_WIDTH - 150, 15, scoreInfo.c_str());
-		}
-	}
-
-	void keyFuncs() {
-		IDiceInvaders::KeyStatus keys;
-		system->getKeyStatus(keys);
-		if (keys.right)
-			horizontalPosition += move;
-		else if (keys.left)
-			horizontalPosition -= move;
-		/*
-		** Avoid the situation where player press and hold the space
-		** Only one rocket will be created for one pressing keys.fire
-		*/
-		if (!keys.fire && launchRocket) {
-			launchRocket = false;
-		}
-		if (keys.fire && !launchRocket) {
-			initRocket();
-			launchRocket = true;
 		}
 	}
 
