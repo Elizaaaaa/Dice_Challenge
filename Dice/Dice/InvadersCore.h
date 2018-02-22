@@ -318,6 +318,8 @@ public:
 			}
 	}
 
+
+private:
 	IDiceInvaders* system;
 
 	// Set Sprites
