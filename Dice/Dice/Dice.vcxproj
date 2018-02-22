@@ -152,7 +152,6 @@
     <ClInclude Include="DiceInvaders.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="InvadersCore.h" />
     <ClCompile Include="Invaders_STL.cpp" />
   </ItemGroup>
   <ItemGroup>
